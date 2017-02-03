@@ -34,7 +34,7 @@ Create the following endpoints in `server.js` using express.
 4. Find one user by id. Use the url params to get the id. Make sure that a get request for a user that does not exists returns 404.
     `GET: /api/users/` + userId
 
-5. Create a new user.  You will receive the data on the body.  All users will need an id property.   Manage the value so that it increments each time.  Collections should be initialized with a defualt array.  Return a valid status code and the new user object you created (with the id on it).  
+5. Create a new user.  You will receive the data on the body.  All users will need an id property.   Manage the value so that it increments each time.  Collections should be initialized with a default array.  Return a valid status code and the new user object you created (with the id on it).  
    `POST: /api/users`
 
 6. Create a new admin user. You will receive their privilege as a url parameter. ('admin, moderator, or user').  Return a valid status code and the new user object you created.  Make sure to set the privilege correctly.
