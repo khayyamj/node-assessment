@@ -1,6 +1,11 @@
 {
+  "name": "user-profiles",
+  "version": "1.0.0",
+  "description": "Node Assessment",
+  "main": "server.js",
   "scripts": {
-    "test": "ava --verbose"
+    "test": "ava --verbose",
+    "start": "node server.js"
   },
   "devDependencies": {
     "ava": "^0.15.2",
@@ -10,5 +15,17 @@
     "supertest-as-promised": "^3.2.0"
   },
   "dependencies": {
-  }
+    "body-parser": "^1.16.0",
+    "express": "^4.14.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/khayyamj/node-assessment.git"
+  },
+  "author": "Khayyam",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/khayyamj/node-assessment/issues"
+  },
+  "homepage": "https://github.com/khayyamj/node-assessment#readme"
 }
