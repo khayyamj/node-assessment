@@ -121,6 +121,63 @@ module.exports = {
       };
       users.push(newUser);
       res.status(200).json(newUser);
+   },
+
+   changeLanguage: function(req, res, next) {
+      var id = req.params.userId;
+      var newLanguage = req.body.language.toLowerCase();
+      for (var i = 0; i < users.length; i++) {
+         if (users[i].id == id) {
+            users[i].language = newLanguage;
+            res.status(200).json('Language update to: ' + users[i].language)
+            return;
+         }
+      }
+      res.status(400).json('User not found')
+   },
+
+   addForum: function(req, res, next) {
+      var id = req.params.userId;
+      var newForum = req.body.add.toLowerCase();
+      for (var i = 0; i < users.length; i++) {
+         if (users[i].id == id) {
+            users[i].favorites.push(newForum);
+            res.status(200).json('Favorite forums updated: ' + users[i].favorites)
+            return;
+         }
+      }
+      res.status(400).json('User not found')
+   },
+
+   deleteForum: function(req, res, next) {
+      var id = req.params.userId;
+      var remForum = req.query.favorite.toLowerCase();
+      for (var i = 0; i < users.length; i++) {
+         if (users[i].id == id) {
+            for (var j = 0; j < users[i].favorites.length; j++) {
+               if (users[i].favorites[j] === remForum){
+                  users[i].favorites.splice(j,1)
+                  res.status(200).json('Favorite forums updated: ' + users[i].favorites)
+                  return;
+               }
+            }
+         }
+      }
+      res.status(400).json('User not found')
+   },
+
+   removeUser: function(req, res, next) {
+      var id = req.params.id;
+      for (var i = 0; i < users.length; i++) {
+         if (users[i].id == id) {
+            var removedUser = users[i].first_name + ' ' + users[i].last_name
+            users.splice(i,1)
+            var responseStr = 'User ' + removedUser + ' has been removed'
+            res.status(200).json(responseStr)
+            return;
+         }
+      }
+      res.status(400).json('User not found')
    }
 
 
