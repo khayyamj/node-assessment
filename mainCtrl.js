@@ -24,6 +24,7 @@ module.exports = {
             return;
          }
       if (city) {
+         console.log('city: ', city)
          for (var i = 0; i < users.length; i++) {
             if (users[i].city === city) {
                list.push(users[i])
@@ -31,13 +32,16 @@ module.exports = {
          }
       }
       if (age) {
+         console.log('age ', age)
          for (var i = 0; i < users.length; i++) {
-            if (users[i].age === age) {
+            console.log(users[i].first_name,users[i].age, age)
+            if (users[i].age == age) {
                list.push(users[i])
             }
          }
       }
       if (state) {
+         console.log('state: ', state)
          for (var i = 0; i < users.length; i++) {
             if (users[i].state === state) {
                list.push(users[i])
@@ -45,6 +49,7 @@ module.exports = {
          }
       }
       if (gender) {
+         console.log('gender: ',gender)
          for (var i = 0; i < users.length; i++) {
             if (users[i].gender === gender) {
                list.push(users[i])
