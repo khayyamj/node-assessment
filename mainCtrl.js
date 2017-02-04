@@ -3,24 +3,63 @@ var users = require('./users.json')
 module.exports = {
 
    userList: function(req, res, next) {
-      var query = req.query.language;
+      var q = req.query;
+      var language = q.language;
+      var city = q.city;
+      var age = q.age;
+      var state = q.state;
+      var gender = q.gender;
       var list = [];
-      if (query === 'klingon' ||
-         query === 'english' ||
-         query === 'french' ||
-         query === 'spanish') {
+      console.log(gender, language, age, city, state)
+      if (language === 'klingon' ||
+         language === 'english' ||
+         language === 'french' ||
+         language === 'spanish') {
             for (var i = 0; i < users.length; i++) {
-               if (users[i].language.toLowerCase() === query) {
+               if (users[i].language.toLowerCase() === language) {
                   list.push(users[i]);
                }
             }
             res.status(200).json(list)
             return;
          }
+      if (city) {
+         for (var i = 0; i < users.length; i++) {
+            if (users[i].city === city) {
+               list.push(users[i])
+            }
+         }
+      }
+      if (age) {
+         for (var i = 0; i < users.length; i++) {
+            if (users[i].age === age) {
+               list.push(users[i])
+            }
+         }
+      }
+      if (state) {
+         for (var i = 0; i < users.length; i++) {
+            if (users[i].state === state) {
+               list.push(users[i])
+            }
+         }
+      }
+      if (gender) {
+         for (var i = 0; i < users.length; i++) {
+            if (users[i].gender === gender) {
+               list.push(users[i])
+            }
+         }
+      }
+      if (!list) {
+         res.status(200).json(list)
+         return;
+      }
       res.status(200).json(users)
    },
 
    specificUser: function(req, res, next) {
+      console.log("specificUser")
       var id = req.params.userId;
       var user;
          for (var i = 0; i < users.length; i++) {
@@ -53,7 +92,7 @@ module.exports = {
       res.status(200).json(list)
    },
 
-   userList: function(req, res, next) {
+   userListOnly: function(req, res, next) {
       var list = [];
       for (var i = 0; i < users.length; i++) {
          if (users[i].type.toLowerCase() === "user") {
@@ -178,6 +217,23 @@ module.exports = {
          }
       }
       res.status(400).json('User not found')
+   },
+
+   updateUser: function(req, res, next) {
+      console.log(req.body)
+      var id = req.params.id
+      for (var i = 0; i < users.length; i++) {
+         if (users[i].id == id){
+            for (prop in req.body) {
+               if (prop = users[i].prop) {
+                  users[i].prop = req.body.prop
+                  console.log(users[i])
+                  res.status(200).json(users[i])
+               }
+            }
+         }
+      }
+
    }
 
 
