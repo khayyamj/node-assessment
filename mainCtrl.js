@@ -56,7 +56,7 @@ module.exports = {
             }
          }
       }
-      if (!list) {
+      if (list.length > 0) {
          res.status(200).json(list)
          return;
       }
@@ -226,20 +226,21 @@ module.exports = {
 
    updateUser: function(req, res, next) {
       console.log(req.body)
+      var myUser = {}
       var id = req.params.id
       for (var i = 0; i < users.length; i++) {
          if (users[i].id == id){
-            for (prop in req.body) {
-               if (prop = users[i].prop) {
-                  users[i].prop = req.body.prop
+            for (var prop in req.body) {
+                  users[i][prop] = req.body[prop]
                   console.log(users[i])
-                  res.status(200).json(users[i])
-               }
+                  myUser = users[i]
             }
          }
       }
-
+      res.status(200).json(myUser)
    }
+
+
 
 
 
