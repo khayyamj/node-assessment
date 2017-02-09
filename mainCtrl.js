@@ -63,27 +63,36 @@ module.exports = {
       res.status(200).json(users)
    },
 
-   specificUser: function(req, res, next) {
-      console.log("specificUser")
-      var id = req.params.userId;
-      var user;
-         for (var i = 0; i < users.length; i++) {
-            if (users[i].id == id) {
-               user = users[i];
-               res.status(200).json(user)
-               return;
-            }
-         }
-      res.status(404).json("User not found")
-   },
+   // specificUser: function(req, res, next) {
+   //    console.log("specificUser")
+   //    var id = req.params.userId;
+   //    var user;
+   //       for (var i = 0; i < users.length; i++) {
+   //          if (users[i].id == id) {
+   //             user = users[i];
+   //             res.status(200).json(user)
+   //             return;
+   //          }
+   //       }
+   //    res.status(404).json("User not found")
+   // },
 
    adminList: function(req, res, next) {
       var list = [];
-      for (var i = 0; i < users.length; i++) {
-         if (users[i].type.toLowerCase() === "admin") {
-            list.push(users[i]);
+      if (parseInt(req.params.priv)) {
+         for (var i = 0; i < users.length; i++) {
+            if (users[i].id == req.params.priv) {
+               list.push(users[i]);
+            }
+         }
+      } else {
+         for (var i = 0; i < users.length; i++) {
+            if (users[i].type.toLowerCase() === req.params.priv) {
+               list.push(users[i]);
+            }
          }
       }
+
       res.status(200).json(list)
    },
 
@@ -110,6 +119,7 @@ module.exports = {
    addUser: function(req, res, next) {
       var id = users.length + 1;
       var info = req.body;
+      console.log(req.body);
       var newUser = {
          id: id,
          first_name: info.first_name,
@@ -121,7 +131,7 @@ module.exports = {
          city: info.city,
          state: info.state,
          type: "user",
-         favorites: info.favorites
+         favorites: [info.favorites]
       };
       users.push(newUser);
       res.status(200).json(newUser);
@@ -140,7 +150,7 @@ module.exports = {
          age: info.age,
          city: info.city,
          state: info.state,
-         type: "admin",
+         type: req.params.priv,
          favorites: info.favorites
       };
       users.push(newUser);
@@ -173,7 +183,7 @@ module.exports = {
       for (var i = 0; i < users.length; i++) {
          if (users[i].id == id) {
             users[i].language = newLanguage;
-            res.status(200).json('Language update to: ' + users[i].language)
+            res.status(200).json(users[i])
             return;
          }
       }
@@ -186,7 +196,7 @@ module.exports = {
       for (var i = 0; i < users.length; i++) {
          if (users[i].id == id) {
             users[i].favorites.push(newForum);
-            res.status(200).json('Favorite forums updated: ' + users[i].favorites)
+            res.status(200).json(users[i])
             return;
          }
       }
@@ -201,7 +211,7 @@ module.exports = {
             for (var j = 0; j < users[i].favorites.length; j++) {
                if (users[i].favorites[j] === remForum){
                   users[i].favorites.splice(j,1)
-                  res.status(200).json('Favorite forums updated: ' + users[i].favorites)
+                  res.status(200).json(users[i])
                   return;
                }
             }
